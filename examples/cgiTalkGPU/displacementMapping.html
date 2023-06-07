@@ -9,10 +9,10 @@
 
 	<body>
 
-		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - (normal + ao + displacement + environment) map demo.<br />
-			ninja head from <a href="https://gpuopen.com/archive/gamescgi/amd-gpu-meshmapper/" target="_blank" rel="noopener">AMD GPU MeshMapper</a>
-		</div>
+<!--		<div id="info">-->
+<!--			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - (normal + ao + displacement + environment) map demo.<br />-->
+<!--			ninja head from <a href="https://gpuopen.com/archive/gamescgi/amd-gpu-meshmapper/" target="_blank" rel="noopener">AMD GPU MeshMapper</a>-->
+<!--		</div>-->
 
 		<!-- Import maps polyfill -->
 		<!-- Remove this when import maps will be widely supported -->
@@ -31,13 +31,10 @@
 
 			import * as THREE from 'three';
 
-			import Stats from 'three/addons/libs/stats.module.js';
-
 			import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 			import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
-			let stats;
 			let camera, scene, renderer, controls;
 
 			const settings = {
@@ -211,11 +208,6 @@
 
 				//
 
-				stats = new Stats();
-				container.appendChild( stats.dom );
-
-				//
-
 				window.addEventListener( 'resize', onWindowResize );
 
 			}
@@ -238,15 +230,9 @@
 			//
 
 			function animate() {
-
 				requestAnimationFrame( animate );
-
 				controls.update();
-
-				stats.begin();
 				render();
-				stats.end();
-
 			}
 
 			function render() {
