@@ -25,8 +25,10 @@
 			import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 			import { VertexNormalsHelper } from 'three/addons/helpers/VertexNormalsHelper.js'
+			import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper.js';
+			import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
 
-			let scene, renderer, camera, controls, vertexNormalsHelper;
+			let scene, light, renderer, camera, controls, vertexNormalsHelper;
 
 			init();
 			animate();
@@ -34,7 +36,7 @@
 			function init() {
 
 				scene = new THREE.Scene()
-				scene.background = new THREE.Color( 0x1B4332 )
+				scene.background = new THREE.Color( 0x083346 )
 
 				renderer = new THREE.WebGLRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -47,6 +49,26 @@
 				controls = new OrbitControls( camera, renderer.domElement );
 				controls.enableDamping = true;
 
+				// light = new THREE.PointLight()
+				// light.position.set( 200, 100, 150 );
+				// scene.add( light )
+
+				RectAreaLightUniformsLib.init();
+
+				// key light
+				const rectAreaLightKey = new THREE.RectAreaLight(0xffffff, 16, 200, 200)
+				rectAreaLightKey.position.set(-400, 400, 400)
+				rectAreaLightKey.lookAt(0, 0, 0)
+				scene.add(rectAreaLightKey)
+				scene.add(new RectAreaLightHelper(rectAreaLightKey))
+
+				// fill light
+				const rectAreaLightFill = new THREE.RectAreaLight(0x888888, 16, 200, 200)
+				rectAreaLightFill.position.set(500, 100, 500)
+				rectAreaLightFill.lookAt(0, 0, 0)
+				scene.add(rectAreaLightFill)
+				scene.add(new RectAreaLightHelper(rectAreaLightFill))
+
 				const loader = new GLTFLoader();
 				loader.load( '../models/gltf/LeePerrySmith/LeePerrySmith.glb', function ( gltf ) {
 
@@ -54,7 +76,9 @@
 
 					mesh.geometry.computeTangents(); // generates bad data due to degenerate UVs
 
-					mesh.material = new THREE.MeshBasicMaterial({ color: 0x40916C }); // 0x0000ff is blue in hex
+					// mesh.material = new THREE.MeshBasicMaterial({ color: 0x0196C1 })
+					mesh.materials = new THREE.MeshLambertMaterial({ color: 0x0196C1 })
+
 
 					const group = new THREE.Group();
 					group.scale.multiplyScalar( 50 );
@@ -65,7 +89,7 @@
 
 					group.add( mesh );
 
-					vertexNormalsHelper = new VertexNormalsHelper(mesh, 5, 0xD8F3DC)
+					vertexNormalsHelper = new VertexNormalsHelper(mesh, 5, 0xB3E0EE)
 					scene.add( vertexNormalsHelper );
 
 				} )
