@@ -43,7 +43,7 @@
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
 
-				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 2e3 );
 				camera.position.z = 400;
 
 				controls = new OrbitControls( camera, renderer.domElement );
@@ -60,14 +60,14 @@
 				rectAreaLightKey.position.set(-400, 400, 400)
 				rectAreaLightKey.lookAt(0, 0, 0)
 				scene.add(rectAreaLightKey)
-				scene.add(new RectAreaLightHelper(rectAreaLightKey))
+				// scene.add(new RectAreaLightHelper(rectAreaLightKey))
 
 				// fill light
 				const rectAreaLightFill = new THREE.RectAreaLight(0x888888, 16, 200, 200)
 				rectAreaLightFill.position.set(500, 100, 500)
 				rectAreaLightFill.lookAt(0, 0, 0)
 				scene.add(rectAreaLightFill)
-				scene.add(new RectAreaLightHelper(rectAreaLightFill))
+				// scene.add(new RectAreaLightHelper(rectAreaLightFill))
 
 				const loader = new GLTFLoader();
 				loader.load( '../models/gltf/LeePerrySmith/LeePerrySmith.glb', function ( gltf ) {
